@@ -1,7 +1,5 @@
 package advJava;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -12,6 +10,7 @@ public class JdbcInsert {
 	public static void main(String[] args) {
 		Connection con = null;
 		Statement st = null;
+		ResultSet rs = null;
 		try {
 
 			// load driver
@@ -24,22 +23,23 @@ public class JdbcInsert {
 			st = con.createStatement();
 			
 			// insert 
-			int rowCount = st.executeUpdate("insert into Employee values (4,'e4', 20)");
+			int rowCount = st.executeUpdate("INSERT INTO Employee VALUES (5,'e5', 20)");
 			if (rowCount > 0) {				
 				System.out.println("inserted successfully +rowCount: " + rowCount);
 			}
 
 			// write sql query
-			ResultSet rs = st.executeQuery("SELECT * FROM  Employee LIMIT 5");
+			rs = st.executeQuery("SELECT * FROM  Employee LIMIT 5");
 
 			printResultSet(rs);
-
+//			rs.close();
 			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		} finally {
 			try {
+				rs.close();
 				// close statement
 				st.close();
 

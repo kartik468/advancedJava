@@ -26,10 +26,20 @@ public class JdbcPrintTable {
 			System.out.println("Table name: ");
 			String tableName = br.readLine();
 			
-			// write sql query			
-			ResultSet rs =  st.executeQuery("SELECT * FROM " + tableName + " LIMIT 5");
+			// write sql query		
+			// executeQuery returns result set reference
+			// ResultSet rs =  st.executeQuery("SELECT * FROM " + tableName + " LIMIT 5");
+			// JdbcPrintTable.printResultSet(rs);
 			
-			JdbcPrintTable.printResultSet(rs);
+			// execute returns result set boolean 
+			ResultSet rs = null;
+			boolean b1 =  st.execute("SELECT * FROM " + tableName + " LIMIT 5");
+//			true if the first result is a ResultSetobject; false if it is an update count or there areno results
+			if (b1) {
+				rs = st.getResultSet();
+				JdbcPrintTable.printResultSet(rs);
+			}
+			
 			
 			// close statement
 			st.close();
